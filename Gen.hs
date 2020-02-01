@@ -76,7 +76,7 @@ cabal =
         , cabal_extraincludedirs   = []
         , cabal_extralibdirs       = []
         , cabal_extrafiles         = []
-        , cabal_pkg_config_depends = []
+        , cabal_pkg_config_depends = [ "DataFrame" ]
         , cabal_buildType          = Simple
         }
 
@@ -84,7 +84,7 @@ extraDep :: [(String,[String])]
 extraDep = []
 
 extraLib :: [String]
-extraLib = []
+extraLib = [ "rt" ]
 
 
 classes :: [Class]
@@ -102,13 +102,14 @@ headers =
 
 main :: IO ()
 main = do
+  cwd <- getCurrentDirectory
   let fficfg = FFICXXConfig {
-                 fficxxconfig_workingDir     = cwd </> "tmp" </> "working"
-               , fficxxconfig_installBaseDir = cwd </> "tmpl-dep-test"
-               , fficxxconfig_staticFileDir  = tmpldir
+                 fficxxconfig_workingDir     = cwd </> "working"
+               , fficxxconfig_installBaseDir = cwd </> "HDataFrame"
+               , fficxxconfig_staticFileDir  = "../template"
                }
       sbcfg  = SimpleBuilderConfig {
-                 sbcTopModule  = "TmplDepTest"
+                 sbcTopModule  = "HDataFrame"
                , sbcModUnitMap = ModuleUnitMap (HM.fromList headers)
                , sbcCabal      = cabal
                , sbcClasses    = classes
