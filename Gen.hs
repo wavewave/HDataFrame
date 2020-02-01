@@ -80,6 +80,14 @@ cabal =
         , cabal_buildType          = Simple
         }
 
+
+t_StdDataFrame :: TemplateClass
+t_StdDataFrame =
+  TmplCls cabal "StdDataFrame" (FormSimple "hmdf::vector") ["tp1"]
+    []
+    []
+
+
 extraDep :: [(String,[String])]
 extraDep = []
 
@@ -94,7 +102,9 @@ toplevelfunctions :: [TopLevelFunction]
 toplevelfunctions = []
 
 templates :: [TemplateClassImportHeader]
-templates = []
+templates =
+  [ TCIH t_StdDataFrame ["DataFrame/DataFrameTypes.h"]
+  ]
 
 headers :: [(ModuleUnit, ModuleUnitImports)]
 headers =
